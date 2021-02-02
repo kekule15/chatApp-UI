@@ -1,3 +1,4 @@
+import 'package:chatApp/screens/chatdetailpage.dart';
 import 'package:flutter/material.dart';
 import 'models/chatUsersModel.dart';
 
@@ -104,6 +105,7 @@ class _ChatPageState extends State<ChatPage> {
           ),
         ),
       ),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
@@ -118,6 +120,16 @@ class _ChatPageState extends State<ChatPage> {
                 return Card(
                   elevation: 0,
                   child: ListTile(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChatDetailPage(
+                                    chatUsers[index].imageUrl,
+                                    chatUsers[index].name,
+                                    chatUsers[index].messageText,
+                                  )));
+                    },
                     leading: CircleAvatar(
                       maxRadius: 30,
                       // backgroundColor: Colors.red,
