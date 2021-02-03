@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 
 class ConversationList extends StatefulWidget {
-  String name;
-  String messageText;
-  String imageUrl;
-  String time;
-  bool isMessageRead;
+ final String name;
+ final String messageText;
+ final String imageUrl;
+ final String time;
+ final  bool isMessageRead;
   ConversationList(this.name, this.messageText, this.imageUrl, this.time,
       this.isMessageRead);
   @override
