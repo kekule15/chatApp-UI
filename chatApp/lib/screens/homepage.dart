@@ -1,6 +1,8 @@
 import 'package:chatApp/screens/chatpage.dart';
 import 'package:flutter/material.dart';
 
+import 'models/tabNavItems.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -9,9 +11,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    int _currentIndex = 0;
+
     return Scaffold(
-      body: Container(
-        child: ChatPage(),
+      body: IndexedStack(
+        index: _currentIndex,
+        children: [
+          for (final tabItem in TabNavigationItem.items) tabItem.page,
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.deepPurple,
@@ -19,6 +26,12 @@ class _HomePageState extends State<HomePage> {
         selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
         unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
         type: BottomNavigationBarType.fixed,
+        onTap: (int index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        currentIndex: _currentIndex,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.message),
