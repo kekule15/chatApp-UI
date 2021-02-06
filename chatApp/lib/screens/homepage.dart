@@ -47,21 +47,36 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: BottomNavyBar(
-          selectedIndex: _currentIndex,
-          onItemSelected: (index) {
-            setState(() => _currentIndex = index);
-            _pageController.jumpToPage(index);
-          },
-          items: <BottomNavyBarItem>[
-            BottomNavyBarItem(
-                title: Text('chat'), icon: Icon(Icons.chat_bubble)),
-            BottomNavyBarItem(title: Text('channel'), icon: Icon(Icons.apps)),
-            BottomNavyBarItem(title: Text('profile'), icon: Icon(Icons.person)),
-          ],
-        ),
+      bottomNavigationBar: BottomNavyBar(
+        backgroundColor: Colors.white,
+        selectedIndex: _currentIndex,
+        onItemSelected: (index) {
+          setState(() => _currentIndex = index);
+          _pageController.jumpToPage(index);
+        },
+        items: <BottomNavyBarItem>[
+          BottomNavyBarItem(
+            title: Text(
+              'chat',
+              style: TextStyle(color: Colors.white),
+            ),
+            icon: Icon(Icons.chat_bubble),
+            inactiveColor: Colors.deepPurple[300],
+            activeColor: Colors.deepPurple[500],
+          ),
+          BottomNavyBarItem(
+            title: Text('channel'),
+            icon: Icon(Icons.apps),
+            inactiveColor: Colors.deepPurple[300],
+            activeColor: Colors.deepPurple[500],
+          ),
+          BottomNavyBarItem(
+            title: Text('profile'),
+            icon: Icon(Icons.person),
+            inactiveColor: Colors.deepPurple[300],
+            activeColor: Colors.deepPurple[500],
+          ),
+        ],
       ),
     );
   }
