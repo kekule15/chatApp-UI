@@ -1,7 +1,8 @@
+import 'package:chatApp/screens/channels.dart';
 import 'package:chatApp/screens/chatpage.dart';
+import 'package:chatApp/screens/profile.dart';
 import 'package:flutter/material.dart';
-
-import 'models/tabNavItems.dart';
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -9,43 +10,58 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int _currentIndex = 0;
+  PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    int _currentIndex = 0;
-
     return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
-        children: [
-          for (final tabItem in TabNavigationItem.items) tabItem.page,
-        ],
+      body: SizedBox.expand(
+        child: PageView(
+          controller: _pageController,
+          onPageChanged: (index) {
+            setState(() => _currentIndex = index);
+          },
+          children: <Widget>[
+            Container(
+              child: ChatPage(),
+            ),
+            Container(
+              child: Channels(),
+            ),
+            Container(
+              child: Profile(),
+            ),
+          ],
+        ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.deepPurple,
-        unselectedItemColor: Colors.grey.shade600,
-        selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
-        unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
-        type: BottomNavigationBarType.fixed,
-        onTap: (int index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        currentIndex: _currentIndex,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.message),
-            label: ("Chats"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group_work),
-            label: ("Channels"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_box),
-            label: ("Profile"),
-          ),
-        ],
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: BottomNavyBar(
+          selectedIndex: _currentIndex,
+          onItemSelected: (index) {
+            setState(() => _currentIndex = index);
+            _pageController.jumpToPage(index);
+          },
+          items: <BottomNavyBarItem>[
+            BottomNavyBarItem(
+                title: Text('chat'), icon: Icon(Icons.chat_bubble)),
+            BottomNavyBarItem(title: Text('channel'), icon: Icon(Icons.apps)),
+            BottomNavyBarItem(title: Text('profile'), icon: Icon(Icons.person)),
+          ],
+        ),
       ),
     );
   }
